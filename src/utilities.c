@@ -259,6 +259,7 @@ fileBasedBitStreams(char *streamFile)
 void
 readBinaryDigitsInASCIIFormat(FILE *fp, char *streamFile)
 {
+	printf("DEBUG: readBinaryDigitsInASCIIFormat\n");
 	int		i, j, num_0s, num_1s, bitsRead, bit;
 	
 	if ( (epsilon = (BitSequence *) calloc(tp.n, sizeof(BitSequence))) == NULL ) {
@@ -271,6 +272,7 @@ readBinaryDigitsInASCIIFormat(FILE *fp, char *streamFile)
 		num_0s = 0;
 		num_1s = 0;
 		bitsRead = 0;
+		printf("DEBUG read %u/%u times %u bits from file %s\n", i+1, tp.numOfBitStreams, tp.n, streamFile);
 		for ( j=0; j<tp.n; j++ ) {
 			if ( fscanf(fp, "%1d", &bit) == EOF ) {
 				printf("ERROR:  Insufficient data in file %s.  %d bits were read.\n", streamFile, bitsRead);
@@ -288,7 +290,9 @@ readBinaryDigitsInASCIIFormat(FILE *fp, char *streamFile)
 			}
 		}
 		fprintf(freqfp, "\t\tBITSREAD = %d 0s = %d 1s = %d\n", bitsRead, num_0s, num_1s);
+		printf("DEBUG: readBinaryDigitsInASCIIFormat: nist_test_suite() START\n");
 		nist_test_suite();
+		printf("DEBUG: readBinaryDigitsInASCIIFormat: nist_test_suite() END\n");
 	}
 	free(epsilon);
 }
@@ -463,48 +467,79 @@ invokeTestSuite(int option, char *streamFile)
 void
 nist_test_suite()
 {
-	if ( (testVector[0] == 1) || (testVector[TEST_FREQUENCY] == 1) ) 
+	if ( (testVector[0] == 1) || (testVector[TEST_FREQUENCY] == 1) ) {
+		printf("nist_test_suite(): Frequency\n");
 		Frequency(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_BLOCK_FREQUENCY] == 1) ) 
+	if ( (testVector[0] == 1) || (testVector[TEST_BLOCK_FREQUENCY] == 1) ) {
+		printf("nist_test_suite(): BlockFrequency\n");
 		BlockFrequency(tp.blockFrequencyBlockLength, tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_CUSUM] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_CUSUM] == 1) ){
+		printf("nist_test_suite(): CumulativeSums\n");
 		CumulativeSums(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_RUNS] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_RUNS] == 1) ){
+		printf("nist_test_suite(): Runs\n");
 		Runs(tp.n); 
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_LONGEST_RUN] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_LONGEST_RUN] == 1) ){
+		printf("nist_test_suite(): LongestRunOfOnes\n");
 		LongestRunOfOnes(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_RANK] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_RANK] == 1) ){
+		printf("nist_test_suite(): Rank\n");
 		Rank(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_FFT] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_FFT] == 1) ){
+		printf("nist_test_suite(): DiscreteFourierTransform\n");
 		DiscreteFourierTransform(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_NONPERIODIC] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_NONPERIODIC] == 1) ){
+		printf("nist_test_suite(): NonOverlappingTemplateMatchings\n");
 		NonOverlappingTemplateMatchings(tp.nonOverlappingTemplateBlockLength, tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_OVERLAPPING] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_OVERLAPPING] == 1) ){
+		printf("nist_test_suite(): OverlappingTemplateMatchings\n");
 		OverlappingTemplateMatchings(tp.overlappingTemplateBlockLength, tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_UNIVERSAL] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_UNIVERSAL] == 1) ){
+		printf("nist_test_suite(): Universal\n");
 		Universal(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_APEN] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_APEN] == 1) ){
+		printf("nist_test_suite(): ApproximateEntropy\n");
 		ApproximateEntropy(tp.approximateEntropyBlockLength, tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION] == 1) ){
+		printf("nist_test_suite(): RandomExcursions\n");
 		RandomExcursions(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION_VAR] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_RND_EXCURSION_VAR] == 1) ){
+		printf("nist_test_suite(): RandomExcursionsVariant\n");
 		RandomExcursionsVariant(tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_SERIAL] == 1) ){
+		printf("nist_test_suite(): Serial\n");
 		Serial(tp.serialBlockLength,tp.n);
+	}
 	
-	if ( (testVector[0] == 1) || (testVector[TEST_LINEARCOMPLEXITY] == 1) )
+	if ( (testVector[0] == 1) || (testVector[TEST_LINEARCOMPLEXITY] == 1) ){
+		printf("nist_test_suite(): LinearComplexity\n");
 		LinearComplexity(tp.linearComplexitySequenceLength, tp.n);
+	}
+	printf("nist_test_suite(): END\n");
 }
