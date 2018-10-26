@@ -45,7 +45,7 @@ void
 lcg()
 {
 	double	*DUNIF, SEED;
-	int		i, counter;
+	int		i;
 	unsigned bit;
 	int		num_0s, num_1s, v, bitsRead;
 
@@ -55,7 +55,6 @@ lcg()
 		printf("Insufficient memory available.\n");
 		exit(1);
 	}
-	counter = 1;
  
 	for ( v=0; v<tp.numOfBitStreams; v++ ) {
 		num_0s = 0;

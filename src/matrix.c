@@ -68,15 +68,15 @@ find_unit_element_and_swap(int flag, int i, int M, int Q, BitSequence **A)
 		index = i+1;
 		while ( (index < M) && (A[index][i] == 0) ) 
 			index++;
-			if ( index < M )
-				row_op = swap_rows(i, index, Q, A);
+		if ( index < M )
+			row_op = swap_rows(i, index, Q, A);
 	}
 	else {
 		index = i-1;
 		while ( (index >= 0) && (A[index][i] == 0) ) 
 			index--;
-			if ( index >= 0 )
-				row_op = swap_rows(i, index, Q, A);
+		if ( index >= 0 )
+			row_op = swap_rows(i, index, Q, A);
 	}
 	
 	return row_op;

@@ -118,7 +118,6 @@ partitionResultFile(int numOfFiles, int numOfSequences, int option, int testName
 	int		i, k, m, j, start, end, num, numread;
 	float	c;
 	FILE	**fp = (FILE **)calloc(numOfFiles+1, sizeof(FILE *));
-	int		*results = (int *)calloc(numOfFiles, sizeof(int *));
 	char	*s[MAXFILESPERMITTEDFORPARTITION];
 	char	resultsDir[200];
 	
@@ -284,7 +283,7 @@ computeMetrics(char *s, int test)
 {
 	int		j, pos, count, passCount, sampleSize, expCount, proportion_threshold_min, proportion_threshold_max;
 	int		freqPerBin[10] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-	double	*A, *T, chi2, proportion, uniformity, p_hat, tmp;
+	double	*A, *T, chi2, uniformity, p_hat;
 	float	c;
 	FILE	*fp;
 	
