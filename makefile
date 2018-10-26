@@ -1,5 +1,6 @@
 CC = /usr/bin/gcc
-GCCFLAGS = -c -Wall
+#GCCFLAGS = -ggdb -c -Wall
+GCCFLAGS = -ggdb -c -Wall #-fsanitize=address -fno-omit-frame-pointer -g
 ROOTDIR = .
 SRCDIR = $(ROOTDIR)/src
 OBJDIR = $(ROOTDIR)/obj
@@ -16,10 +17,10 @@ OBJ = $(OBJDIR)/assess.o $(OBJDIR)/frequency.o $(OBJDIR)/blockFrequency.o \
       $(OBJDIR)/utilities.o $(OBJDIR)/generators.o $(OBJDIR)/genutils.o
 
 assess: $(OBJ)
-	$(CC) -o $@ $(OBJ) -lm
+	$(CC) -o $@ $(OBJ) -lm #-fsanitize=address
 
 $(OBJDIR)/assess.o: $(SRCDIR)/assess.c defs.h decls.h utilities.h
-	$(CC) -o $@ -c $(SRCDIR)/assess.c
+	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/assess.c
 
 $(OBJDIR)/frequency.o: $(SRCDIR)/frequency.c defs.h externs.h
 	$(CC) -o $@ $(GCCFLAGS) $(SRCDIR)/frequency.c
