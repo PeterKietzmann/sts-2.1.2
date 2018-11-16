@@ -46,6 +46,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <stdint.h>
 #include "../include/decls.h"
 #include "../include/cephes.h"  
 #include "../include/utilities.h"
@@ -61,7 +62,10 @@ main(int argc, char *argv[])
 	int		i;
 	int		option;			/* TEMPLATE LENGTH/STREAM LENGTH/GENERATOR*/
 	char	*streamFile;	/* STREAM FILENAME     */
-	
+	printf("sizeof(char): %lu, sizeof(BYTE): %lu, sizeof(USHORT): %lu, sizeof(int):   %lu\n"
+		   "sizeof(UINT): %lu, sizeof(long): %lu, sizeof(double): %lu, sizeof(ULONG): %lu\n\n",
+			sizeof(char), sizeof(BYTE), sizeof(USHORT), sizeof(int),\
+			sizeof(UINT), sizeof(long), sizeof(double), sizeof(ULONG));
 
 	if ( argc != 2 ) {
 		printf("Usage: %s <stream length>\n", argv[0]);
