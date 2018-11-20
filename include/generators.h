@@ -8,6 +8,7 @@ void	quadRes1();
 void	quadRes2();
 void	cubicRes();
 void	exclusiveOR();
+void	xorshift_RIOT();
 void	modExp();
 void	bbs();
 void	micali_schnorr();

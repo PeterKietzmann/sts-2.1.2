@@ -22,7 +22,8 @@ displayGeneratorOptions()
 	printf("    [2] Quadratic Congruential I   [3] Quadratic Congruential II\n");
 	printf("    [4] Cubic Congruential         [5] XOR\n");
 	printf("    [6] Modular Exponentiation     [7] Blum-Blum-Shub\n");
-	printf("    [8] Micali-Schnorr             [9] G Using SHA-1\n\n");
+	printf("    [8] Micali-Schnorr             [9] G Using SHA-1\n");
+	printf("   [10] XORSHIFT RIOT\n\n");
 	printf("   Enter Choice: ");
 	scanf("%d", &option);
 	printf("\n\n");
@@ -80,6 +81,9 @@ generatorOptions(char** streamFile)
 				break;
 			case 9:
 				*streamFile = "G using SHA-1";
+				break;
+			case 10:
+				*streamFile = "XORSHIFT RIOT";
 				break;
 				
 			/* INTRODUCE NEW PRNG NAMES HERE */
@@ -452,6 +456,9 @@ invokeTestSuite(int option, char *streamFile)
 			break;
 		case 9:
 			SHA1();
+			break;
+		case 10:
+			xorshift_RIOT();
 			break;
 			
 		/* INTRODUCE NEW PSEUDO RANDOM NUMBER GENERATORS HERE */

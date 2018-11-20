@@ -242,6 +242,70 @@ exclusiveOR()
 }
 
 
+unsigned int _countSetBits(unsigned int n)
+{
+  unsigned int count = 0;
+  while (n)
+  {
+    count += n & 1;
+    n >>= 1;
+  }
+  return count;
+}
+
+
+void
+xorshift_RIOT()
+{
+	int		k, num_0s, num_1s, num_1s_tmp, bitsRead;
+
+	num_0s = 0;
+	num_1s = 0;
+	num_1s_tmp = 0;
+	bitsRead = 0;
+
+	if ( ((epsilon = (BitSequence *)calloc(tp.n, sizeof(BitSequence))) == NULL) ) {
+		printf("Insufficient memory available.\n");
+		exit(1);
+	}
+	uint32_t state = 534571505;
+
+	for ( k=0; k<tp.numOfBitStreams; k++ ) {
+		while(bitsRead <= tp.n) {
+			// xor algorithm
+			uint32_t x = state;
+			x ^= x << 13;
+			x ^= x >> 17;
+			x ^= x << 5;
+			state = x;
+
+			for (int i = 0; i < 32; i++) {
+				int eps_idx = bitsRead+i;
+					if(x & (1 << i)) {
+						epsilon[eps_idx] = 1;
+					}
+					else {
+						epsilon[eps_idx] = 0;
+					}
+			}
+
+			bitsRead += 32;
+			num_1s_tmp = _countSetBits(x);
+			num_1s += num_1s_tmp;
+			num_0s += (32- num_1s_tmp);
+		}
+		fprintf(freqfp, "\t\tBITSREAD = %d 0s = %d 1s = %d\n", bitsRead, num_0s, num_1s); fflush(freqfp);
+		nist_test_suite();
+		num_0s = 0;
+		num_1s = 0;
+		num_1s_tmp = 0;
+		bitsRead = 0;
+	}
+	free(epsilon);
+	return;
+}
+
+
 void
 modExp()
 {
